@@ -7,9 +7,10 @@ function firstPage() {
     var redview = Ti.UI.createView({
         top:20,
         left:20,
-        width:10,
-        height:10,
-        backgroundColor:"red"
+        width: Ti.UI.FILL,
+        height:Ti.UI.FILL,
+        backgroundColor:"red",
+        zIndex: 1
     });
     pageview.add(redview);
     var yellowview = Ti.UI.createView({
@@ -52,7 +53,7 @@ function   pageWithLayout(direction){
             top:40,
             left:20,
             width:20,
-            height:20,
+            height: Ti.UI.FILL,
             backgroundColor:color
         });
     }
@@ -62,10 +63,58 @@ function   pageWithLayout(direction){
     pageview.add(makeView('green'));
     return pageview;
 }
+function advancedPage() {
+    var pageview = Ti.UI.createView({
+        backgroundColor:'transparent',
+        top:0,
+        left:0,
+        width:'100%',
+        height:'100%',
+        layout: 'vertical'
+    });
+    var firstrow = Ti.UI.createView({
+        backgroundColor:'transparent',
+        width: Ti.UI.FILL,
+        height: '30%',
+        layout: 'horizontal'
+    });
+    var firstfirst = Ti.UI.createView({
+        backgroundColor:'red',
+        width: '40%',
+        borderRadius: 5,
+    });
+    var firstsecond = Ti.UI.createView({
+        backgroundColor:'blue',
+        width: '60%',
+        borderRadius: 5,
+    });
+    firstrow.add(firstfirst);
+    firstrow.add(firstsecond);
+    var secondrow = Ti.UI.createView({
+        backgroundColor:'transparent',
+        width: Ti.UI.FILL,
+        height: '70%'
+    });
+    var secondfirst = Ti.UI.createView({
+        backgroundColor: 'green',
+        top: 20,
+        right: 20,
+        left: 20,
+        bottom: 20,
+        borderRadius: 5
+    });
+    secondrow.add(secondfirst);
+    pageview.add(firstrow);
+    pageview.add(secondrow);
+    return pageview;
+}
 var grid = require('gridlines');
 grid.drawgrid(20, win);
+var pages = [advancedPage(),
+             firstPage(), pageWithLayout('vertical'),
+             pageWithLayout('horizontal')];
 var scroll = Ti.UI.createScrollableView({
-    views:[firstPage(), pageWithLayout('vertical'), pageWithLayout('horizontal')],
+    views: pages,
     showPagingControl:true
 });
 win.add(scroll);
