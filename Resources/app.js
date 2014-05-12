@@ -45,7 +45,7 @@ function   pageWithLayout(direction){
         left:0,
         width:'100%',
         height:'100%',
-        layout: direction,
+        layout: direction
     });
     // simple function for making colored boxes
     function makeView(color) {
@@ -147,7 +147,15 @@ function advancedPage2() {
     }
 
     function clickHandler(e) {
-        alert(e.source.title);
+        var prev_angle = e.source.prev_angle || 0;
+        prev_angle += 45;
+        var anim = Ti.UI.createAnimation({
+            transform: Ti.UI.create2DMatrix().rotate(prev_angle),
+            duration: 500
+        });
+
+        e.source.animate(anim);
+        e.source.prev_angle = prev_angle;
     }
 
     var firstrow = Ti.UI.createView({
