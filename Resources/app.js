@@ -68,8 +68,8 @@ function advancedPage() {
         backgroundColor:'transparent',
         top:0,
         left:0,
-        width:'100%',
-        height:'100%',
+        width: Ti.UI.FILL,
+        height:Ti.UI.FILL,
         layout: 'vertical'
     });
     var firstrow = Ti.UI.createView({
@@ -80,13 +80,21 @@ function advancedPage() {
     });
     var firstfirst = Ti.UI.createView({
         backgroundColor:'red',
-        width: '40%',
+        width: '30%',
         borderRadius: 5,
+        top: 20,
+        bottom: 20,
+        right: '3%',
+        left: '3%'
     });
     var firstsecond = Ti.UI.createView({
         backgroundColor:'blue',
-        width: '60%',
+        width: '40%',
         borderRadius: 5,
+        top: 20,
+        bottom: 20,
+        right: '3%',
+        left: '3%'
     });
     firstrow.add(firstfirst);
     firstrow.add(firstsecond);
@@ -108,9 +116,82 @@ function advancedPage() {
     pageview.add(secondrow);
     return pageview;
 }
+
+function advancedPage2() {
+    var pageview = Ti.UI.createView({
+        backgroundColor:'transparent',
+        top:0,
+        left:0,
+        width: Ti.UI.FILL,
+        height:Ti.UI.FILL,
+        layout: 'vertical'
+    });
+    function makeView(width, color, cback) {
+        var outer = Ti.UI.createView({
+            width: width
+        });
+        var inner = Ti.UI.createButton({
+            top:20,
+            left:20,
+            bottom: 20,
+            right: 20,
+            backgroundColor: color,
+            borderRadius: 10,
+            title: color
+        });
+        if (cback) {
+            inner.addEventListener('click', cback);
+        }
+        outer.add(inner);
+        return outer;
+    }
+
+    function clickHandler(e) {
+        alert(e.source.title);
+    }
+
+    var firstrow = Ti.UI.createView({
+        backgroundColor:'transparent',
+        width: Ti.UI.FILL,
+        height: '30%',
+        layout: 'horizontal'
+    });
+    firstrow.add(makeView('30%', 'red', clickHandler));
+    firstrow.add(makeView('70%', 'blue', clickHandler));
+
+    var secondrow = Ti.UI.createView({
+        backgroundColor:'transparent',
+        width: Ti.UI.FILL,
+        height: '70%',
+        layout: 'vertical'
+    });
+    var secondfirst = Ti.UI.createView({
+        backgroundColor:'transparent',
+        width: Ti.UI.FILL,
+        height: '50%',
+        layout: 'horizontal'
+    });
+    secondfirst.add(makeView('50%', 'yellow', clickHandler));
+    secondfirst.add(makeView('50%', 'green', clickHandler));
+    var secondsecond = Ti.UI.createView({
+        backgroundColor:'transparent',
+        width: Ti.UI.FILL,
+        height: '50%',
+        layout: 'horizontal'
+    });
+    secondsecond.add(makeView('50%', 'black', clickHandler));
+    secondsecond.add(makeView('50%', 'cyan', clickHandler));
+
+    secondrow.add(secondfirst);
+    secondrow.add(secondsecond);
+    pageview.add(firstrow);
+    pageview.add(secondrow);
+    return pageview;
+}
+
 var grid = require('gridlines');
 grid.drawgrid(20, win);
-var pages = [advancedPage(),
+var pages = [advancedPage2(), advancedPage(),
              firstPage(), pageWithLayout('vertical'),
              pageWithLayout('horizontal')];
 var scroll = Ti.UI.createScrollableView({
